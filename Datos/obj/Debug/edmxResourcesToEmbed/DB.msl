@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="BDVentaCompraModelStoreContainer" CdmEntityContainer="BDVentaCompraEntities">
+    <EntitySetMapping Name="TCompra">
+      <EntityTypeMapping TypeName="BDVentaCompraModel.TCompra">
+        <MappingFragment StoreEntitySet="TCompra">
+          <ScalarProperty Name="IdCompra" ColumnName="IdCompra" />
+          <ScalarProperty Name="Monto" ColumnName="Monto" />
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TDetalleCompra">
+      <EntityTypeMapping TypeName="BDVentaCompraModel.TDetalleCompra">
+        <MappingFragment StoreEntitySet="TDetalleCompra">
+          <ScalarProperty Name="IdDetalleCompra" ColumnName="IdDetalleCompra" />
+          <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+          <ScalarProperty Name="Precio" ColumnName="Precio" />
+          <ScalarProperty Name="TotalFactura" ColumnName="TotalFactura" />
+          <ScalarProperty Name="PorcentajeCosto" ColumnName="PorcentajeCosto" />
+          <ScalarProperty Name="CostoUnidad" ColumnName="CostoUnidad" />
+          <ScalarProperty Name="CostoUnitario" ColumnName="CostoUnitario" />
+          <ScalarProperty Name="CostoTotal" ColumnName="CostoTotal" />
+          <ScalarProperty Name="IdCompra" ColumnName="IdCompra" />
+          <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TDetalleGasto">
+      <EntityTypeMapping TypeName="BDVentaCompraModel.TDetalleGasto">
+        <MappingFragment StoreEntitySet="TDetalleGasto">
+          <ScalarProperty Name="IdDetalleGasto" ColumnName="IdDetalleGasto" />
+          <ScalarProperty Name="Precio" ColumnName="Precio" />
+          <ScalarProperty Name="IdGasto" ColumnName="IdGasto" />
+          <ScalarProperty Name="IdCompra" ColumnName="IdCompra" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TGananciaVenta">
+      <EntityTypeMapping TypeName="BDVentaCompraModel.TGananciaVenta">
+        <MappingFragment StoreEntitySet="TGananciaVenta">
+          <ScalarProperty Name="IdGanancia" ColumnName="IdGanancia" />
+          <ScalarProperty Name="PorcentajeGanancia" ColumnName="PorcentajeGanancia" />
+          <ScalarProperty Name="MontoPorcentajeGanancia" ColumnName="MontoPorcentajeGanancia" />
+          <ScalarProperty Name="PrecioVenta" ColumnName="PrecioVenta" />
+          <ScalarProperty Name="PrecioVentaEstablecido" ColumnName="PrecioVentaEstablecido" />
+          <ScalarProperty Name="TotalVenta" ColumnName="TotalVenta" />
+          <ScalarProperty Name="MontoGanancia" ColumnName="MontoGanancia" />
+          <ScalarProperty Name="TotalUtilidadBruta" ColumnName="TotalUtilidadBruta" />
+          <ScalarProperty Name="UnidadesVendidas" ColumnName="UnidadesVendidas" />
+          <ScalarProperty Name="TotalVendido" ColumnName="TotalVendido" />
+          <ScalarProperty Name="Stock" ColumnName="Stock" />
+          <ScalarProperty Name="IdCompra" ColumnName="IdCompra" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TGasto">
+      <EntityTypeMapping TypeName="BDVentaCompraModel.TGasto">
+        <MappingFragment StoreEntitySet="TGasto">
+          <ScalarProperty Name="IdGasto" ColumnName="IdGasto" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TProducto">
+      <EntityTypeMapping TypeName="BDVentaCompraModel.TProducto">
+        <MappingFragment StoreEntitySet="TProducto">
+          <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

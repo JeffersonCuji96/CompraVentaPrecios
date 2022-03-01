@@ -18,6 +18,7 @@ namespace Datos
         public BDVentaCompraEntities()
             : base("name=BDVentaCompraEntities")
         {
+            Configuration.LazyLoadingEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

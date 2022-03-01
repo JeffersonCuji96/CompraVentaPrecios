@@ -10,3 +10,6 @@ C:\Users\renem\source\repos\CompraVentaPrecios\Negocio\obj\Debug\Negocio.csproj.
 C:\Users\renem\source\repos\CompraVentaPrecios\Negocio\obj\Debug\Negocio.csproj.CopyComplete
 C:\Users\renem\source\repos\CompraVentaPrecios\Negocio\obj\Debug\Negocio.dll
 C:\Users\renem\source\repos\CompraVentaPrecios\Negocio\obj\Debug\Negocio.pdb
+C:\Users\renem\source\repos\CompraVentaPrecios\Negocio\bin\Debug\Datos.dll
+C:\Users\renem\source\repos\CompraVentaPrecios\Negocio\bin\Debug\Datos.pdb
+C:\Users\renem\source\repos\CompraVentaPrecios\Negocio\bin\Debug\Datos.dll.config

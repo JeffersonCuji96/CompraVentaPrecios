@@ -83,3 +83,14 @@ C:\Users\renem\source\repos\CompraVentaPrecios\CompraVentaPrecios\obj\Debug\Comp
 C:\Users\renem\source\repos\CompraVentaPrecios\CompraVentaPrecios\obj\Debug\CompraVentaPrecios.csproj.CopyComplete
 C:\Users\renem\source\repos\CompraVentaPrecios\CompraVentaPrecios\obj\Debug\CompraVentaPrecios.dll
 C:\Users\renem\source\repos\CompraVentaPrecios\CompraVentaPrecios\obj\Debug\CompraVentaPrecios.pdb
+C:\Users\renem\source\repos\CompraVentaPrecios\CompraVentaPrecios\bin\Datos.dll
+C:\Users\renem\source\repos\CompraVentaPrecios\CompraVentaPrecios\bin\Negocio.dll
+C:\Users\renem\source\repos\CompraVentaPrecios\CompraVentaPrecios\bin\EntityFramework.dll
+C:\Users\renem\source\repos\CompraVentaPrecios\CompraVentaPrecios\bin\Datos.pdb
+C:\Users\renem\source\repos\CompraVentaPrecios\CompraVentaPrecios\bin\Datos.dll.config
+C:\Users\renem\source\repos\CompraVentaPrecios\CompraVentaPrecios\bin\Negocio.pdb
+C:\Users\renem\source\repos\CompraVentaPrecios\CompraVentaPrecios\bin\Negocio.dll.config
+C:\Users\renem\source\repos\CompraVentaPrecios\CompraVentaPrecios\bin\EntityFramework.xml
+C:\Users\renem\source\repos\CompraVentaPrecios\CompraVentaPrecios\obj\Debug\CompraVentaPrecios.csprojAssemblyReference.cache
+C:\Users\renem\source\repos\CompraVentaPrecios\CompraVentaPrecios\bin\EntityFramework.SqlServer.dll
+C:\Users\renem\source\repos\CompraVentaPrecios\CompraVentaPrecios\bin\EntityFramework.SqlServer.xml

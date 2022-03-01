@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewBag.Title = "Productos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="modal fade" id="FormModalProductos">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Descripción de Productos</h5>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <input type="hidden" id="txtIdProducto" />
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="txtDescripcion">Descripción</label>
+                            <input type="text" class="form-control" id="txtDescripcion">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btnGuardar" type="button" class="btn btn-primary" onclick="Guardar()">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-2"></div>
+    <div class="col-8">
+        <div class="card">
+            <div class="card-header">
+                PRODUCTOS
+            </div>
+            <div class="card-body">
+                <table class="table table-striped table-bordered table-sm dt-responsive nowrap" id="tblProducto" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Id</th>
+                            <th class="text-center">Descripción</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-2"></div>
+</div>
+
+
+@section scripts{
+    <script src="~/Scripts/Operaciones/producto.js"></script>
+}

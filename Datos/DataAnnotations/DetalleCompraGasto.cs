@@ -23,7 +23,7 @@ namespace Datos.DataAnnotations
         public int Cantidad { get; set; }
         
         [Required(ErrorMessage = "Precio del producto requerido")]
-        [RegularExpression(@"^[0-9]+([,][0-9]{1,2})?$", ErrorMessage = "Precio del producto admite coma y 2 decimales")]
+        [RegularExpression(@"^[0-9]+(,[0-9]{1,2})?$", ErrorMessage = "Precio incorrecto del producto, admite coma y 2 decimales")]
         public string Precio { get; set; }
     }
     public class TempDetalleGasto
@@ -32,7 +32,7 @@ namespace Datos.DataAnnotations
         public long IdGasto { get; set; }
 
         [Required(ErrorMessage = "Precio del gasto requerido")]
-        [RegularExpression(@"^[0-9]+([,][0-9]{1,2})?$", ErrorMessage = "Precio del gasto admite coma y 2 decimales")]
+        [RegularExpression(@"^[0-9]+(,[0-9]{1,2})?$", ErrorMessage = "Precio incorrecto del gasto, admite coma y 2 decimales")]
         public string Precio { get; set; }
     }
 }

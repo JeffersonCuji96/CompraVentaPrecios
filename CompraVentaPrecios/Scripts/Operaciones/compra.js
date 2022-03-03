@@ -2,7 +2,8 @@
 var arrayCompras = new Array();
 var validoCompras = false;
 var validoGastos = false;
-var arrayProductos;
+var arrayProductos=new Array();
+var contador = 1;
 const urlHost = "https://localhost:44334";
 
 $(document).ready(function () {
@@ -27,6 +28,37 @@ function Guardar() {
         }); return;
     }
     EstablecerComprasYGastos();
+    if (validoCompras && validoGastos) {
+        var detalleCompraGasto = {
+            Fecha: $("#txtFecha").val(),
+            DetalleCompra: arrayCompras,
+            DetalleGasto: arrayGastos
+        };
+        jQuery.ajax({
+            url: urlHost+"/Compra/Guardar",
+            type: "POST",
+            data: JSON.stringify(detalleCompraGasto),
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (res) {
+                if (res.estado === 0) {
+                    let list = '';
+                    for (var i = 0; i < res.errores.length; i++) {
+                        list += i + 1 + ". " + res.errores[i] + '\n';
+                    }
+                    swal("Error", list);
+                    validoCompras = false;
+                    validoGastos = false;
+                } else if (res.estado === 1) {
+                    Limpiar();
+                    swal("Transacción exitosa!", "Información guardada", "success");
+                } else {
+                    swal("Transacción erronea", "La operación no se realizó", "error");
+                }
+                $("#btnGuardar").attr("disabled", false);
+            }
+        });
+    }
 }
 
 function EstablecerComprasYGastos() {
@@ -38,7 +70,7 @@ function EstablecerComprasYGastos() {
         var row = $(this);
         var objGasto = {};
         objGasto.IdGasto = parseFloat(row.find(".Id").html());
-        objGasto.Precio = row.find(".Precio input").val().replace('.', ',');
+        objGasto.Precio = row.find(".Precio input");
         arrayGastos.push(objGasto);
         arrayGastosValidacion.push(objGasto);
     });
@@ -47,7 +79,7 @@ function EstablecerComprasYGastos() {
         var objCompra = {};
         objCompra.Producto = row.find(".Producto select").val();
         objCompra.Cantidad = parseInt(row.find(".Cantidad input").val());
-        objCompra.Precio = row.find(".Precio input").val().replace('.', ',');
+        objCompra.Precio = row.find(".Precio input");
         arrayCompras.push(objCompra);
         arrayComprasValidacion.push(objCompra);
     });
@@ -57,13 +89,13 @@ function EstablecerComprasYGastos() {
 
 function ValidarGastos(gastos) {
     for (var i = 0; i < gastos.length; i++) {
-        if (parseFloat(gastos[i].Precio) <= 0 || isNaN(parseFloat(gastos[i].Precio))) {
+        if (parseFloat(gastos[i].Precio.replace(',', '.')) <= 0 || isNaN(parseFloat(gastos[i].Precio.replace(',', '.')))) {
             swal("Gastos", "Ingrese un precio válido", { className: "swalSize" }).then(() => {
                 $("#fila-gasto" + i + " input").focus();
                 $("#btnGuardar").attr("disabled", false);
             }); return;
         }
-        $("#fila-gasto" + i + " input").val(parseFloat(gastos[i].Precio.replace(',', '.')));
+        $("#fila-gasto" + i + " input").val(gastos[i].Precio.replace('.', ','));
     }
     validoGastos = true;
 }
@@ -82,13 +114,13 @@ function ValidarCompras(compras) {
             }); return;
         }
         $("#fila-producto" + i + " .Cantidad input").val(compras[i].Cantidad);
-        if (parseFloat(compras[i].Precio) <= 0 || isNaN(parseFloat(compras[i].Precio))) {
+        if (parseFloat(compras[i].Precio.replace(',', '.')) <= 0 || isNaN(parseFloat(compras[i].Precio.replace(',', '.')))) {
             swal("Productos", "Ingrese un precio válido", { className: "swalSize" }).then(() => {
                 $("#fila-producto" + i + " .Precio input").focus();
                 $("#btnGuardar").attr("disabled", false);
             }); return;
         }
-        $("#fila-producto" + i + " .Precio input").val(parseFloat(compras[i].Precio.replace(',', '.')));
+        $("#fila-producto" + i + " .Precio input").val(compras[i].Precio.replace('.', ','));
     }
     validoCompras = true;
 }

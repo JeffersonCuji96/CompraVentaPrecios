@@ -8,7 +8,15 @@ const urlHost = "https://localhost:44334";
 $(document).ready(function () {
     ObtenerGastos();
     ObtenerProductos();
+    InicializarSelect2();
 });
+
+function InicializarSelect2() {
+    $('.select2js').select2({
+        tags: true,
+        selectOnClose: true
+    });
+}
 
 function Guardar() {
     $("#btnGuardar").attr("disabled", true);
@@ -116,4 +124,70 @@ function ObtenerProductos() {
             }
         }
     });
+}
+
+function CargarOpciones(numFila) {
+    var n = numFila - 1;
+    for (var i = 0; i < arrayProductos.length; i++) {
+        $("#fila-producto" + n + " .select2js").append('<option value="' + arrayProductos[i].IdProducto + '">' + arrayProductos[i].Descripcion + '</option>');
+    }
+    InicializarSelect2();
+}
+
+function AgregarFila() {
+    $('<tr id="fila-producto' + contador + '">' +
+        '<td class="Producto"><select class="select2js form-control" onchange="RestablecerOpcion()"><option>Seleccionar</option></select></td>' +
+        '<td class="Cantidad">' + '<input type="number" min="1" class="form-control" onkeypress="return EntradaCantidad(event)" value="0" onpaste="return false"/>' + '</td>' +
+        '<td class="Precio">' + '<input type="number" min="1" class="form-control" onkeypress="return EntradaPrecio(event)" value="0" onpaste="return false"/>' + '</td>' +
+        '<td>' + '<button type="button" class="btn btn-danger btn-sm" onclick="EliminarFila(' + contador + ');"><i class="fa fa-trash"></i></button>' + '</td>' +
+        '</tr>').appendTo('#tblCompra');
+    contador++;
+    CargarOpciones(contador);
+    RestablecerOpcion();
+}
+
+function RestablecerOpcion() {
+    $('.select2js option').prop('disabled', false);
+    $('.select2js').each(function () {
+        var $this = $(this);
+        $('.select2js')
+            .not($this)
+            .find('option')
+            .each(function () {
+                if ($(this).attr('value') == $this.val()) {
+                    $(this).prop('disabled', true);
+                }
+            });
+    });
+}
+
+function EliminarFila(numFila) {
+    if (contador > 1) {
+        $('#fila-producto' + numFila).remove();
+        contador--;
+    }
+    RestablecerOpcion();
+}
+
+function EntradaPrecio(evt) {
+    var charCode = (evt.which) ? evt.which : event.keyCode;
+    return !(charCode > 31 && charCode != 44 && (charCode < 48 || charCode > 57));
+}
+
+function EntradaCantidad(evt) {
+    var charCode = (evt.which) ? evt.which : event.keyCode;
+    return !(charCode > 31 && (charCode < 48 || charCode > 57));
+}
+
+function Limpiar() {
+    $("#txtFecha").val(null);
+    $("#tblGasto .Precio input").val(0);
+    $('.select2js').val($('.select2js option:first-child').val()).trigger('change');
+    $("#tblCompra .Cantidad input").val(0);
+    $("#tblCompra .Precio input").val(0);
+    if (contador > 1) {
+        for (var i = 0; i < contador; i++) {
+            EliminarFila(i);
+        }
+    }
 }

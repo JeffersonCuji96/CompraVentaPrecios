@@ -129,6 +129,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CompraController.cs" />
     <Compile Include="Controllers\CostoController.cs" />
     <Compile Include="Controllers\GastoController.cs" />
     <Compile Include="Controllers\ProductoController.cs" />
@@ -1822,6 +1823,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\Operaciones\compra.js" />
     <Content Include="Scripts\Operaciones\gasto.js" />
     <Content Include="Scripts\Operaciones\producto.js" />
     <Content Include="Web.config" />
@@ -1838,6 +1840,7 @@
     <Content Include="Views\Costo\Index.cshtml" />
     <Content Include="Views\Producto\Index.cshtml" />
     <Content Include="Views\Gasto\Index.cshtml" />
+    <Content Include="Views\Compra\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,71 @@
+﻿@{
+    ViewBag.Title = "Detalle de Compra";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="divDetalleCompra">
+    <div class="modal-dialog modal-lg mw600">
+        <div class="modal-content">
+            <div class="card-header">
+                DETALLE DE LA COMPRA
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-4 offset-4 mb-4 text-center">
+                        <label for="txtFecha">Fecha</label>
+                        <input type="date" class="form-control mw200" id="txtFecha" />
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-8 offset-2">
+                        <table id="tblGasto" class="table table-bordered table-sm">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Detalle de Gastos</th>
+                                    <th class="text-center w100">Precios</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table id="tblCompra" class="table table-bordered table-sm">
+                            <thead>
+                                <tr>
+                                    <td class="w300">Producto</td>
+                                    <td>Cantidad</td>
+                                    <td>Precio</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr id="fila-producto0">
+                                    <td class="Producto">
+                                        <select class="select2js form-control" onchange="RestablecerOpcion();">
+                                            <option>Seleccionar</option>
+                                        </select>
+                                    </td>
+                                    <td class="Cantidad"><input class="form-control" type="number" min="1" onkeypress="return EntradaCantidad(event);" value="0" onpaste="return false" /></td>
+                                    <td class="Precio"><input class="form-control" type="text" onkeypress="return EntradaPrecio(event)" value="0" onpaste="return false" /></td>
+                                    <td><button type="button" class="btn btn-danger btn-sm" onclick="EliminarFila(0);"><i class="fa fa-trash"></i></button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="text-left">
+                    <button type="button" class="btn btn-info btn-sm" onclick="AgregarFila();"><i class="fas fa-plus-square"></i>&nbsp;Agregar más productos</button>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnGuardar" class="btn btn-success" onclick="Guardar()">Guardar Información</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Scripts/Operaciones/compra.js"></script>
+}

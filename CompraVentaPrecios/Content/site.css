@@ -5,3 +5,32 @@
 th {
     border-bottom: 1px solid #efefef !important;
 }
+
+.w35 {  width: 35px; }
+.w50 { width: 50px; }
+.w80 { width: 80px; }
+.w100 { width: 100px; }
+.w120 { width: 125px; }
+.w200 { width: 200px; }
+.w300 { width: 300px; }
+.wm500 {
+    width: 400px;
+    min-width: 400px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+.mw600 { min-width:600px; }
+.mw200 { min-width:200px; }
+#tblCompra tbody tr td {
+    vertical-align: middle;
+}
+.swalSize {
+    width: 300px;
+    height: 220px;
+}
+.select2-container *:focus {
+    outline: none;
+}
+.divDetalleCompra {
+    overflow-x: auto;
+    margin-top: -30px
+}

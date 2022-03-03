@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using Datos.DataAnnotations;
 
 namespace Negocio
 {
@@ -22,6 +23,21 @@ namespace Negocio
                 var oProducto = (from p in db.TProducto.Where(x => x.IdProducto == id) select p).FirstOrDefault();
                 return oProducto;
             }
+        }
+
+        public List<TempDetalleCompra> VerificarYAgregar(List<TempDetalleCompra> detalle, BDVentaCompraEntities db)
+        {
+            for (int i = 0; i < detalle.Count(); i++)
+            {
+                if (!int.TryParse(detalle[i].Producto, out _))
+                {
+                    var objProducto = new TProducto() { Descripcion = detalle[i].Producto };
+                    db.TProducto.Add(objProducto);
+                    db.SaveChanges();
+                    detalle[i].Producto = objProducto.IdProducto.ToString();
+                }
+            }
+            return detalle;
         }
         public int Guardar(TProducto objProducto)
         {

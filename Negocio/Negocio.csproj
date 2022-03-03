@@ -52,6 +52,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NCompra.cs" />
+    <Compile Include="NDetalleCompra.cs" />
+    <Compile Include="NDetalleGasto.cs" />
     <Compile Include="NGasto.cs" />
     <Compile Include="NProducto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

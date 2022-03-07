@@ -52,6 +52,8 @@ function Guardar() {
                 } else if (res.estado === 1) {
                     Limpiar();
                     swal("Transacción exitosa!", "Información guardada", "success");
+                } else if (res.estado === 2) {
+                    swal("Transacción erronea", "La fecha ingresada no está disponible", "warning");
                 } else {
                     swal("Transacción erronea", "La operación no se realizó", "error");
                 }
@@ -70,7 +72,7 @@ function EstablecerComprasYGastos() {
         var row = $(this);
         var objGasto = {};
         objGasto.IdGasto = parseFloat(row.find(".Id").html());
-        objGasto.Precio = row.find(".Precio input");
+        objGasto.Precio = row.find(".Precio input").val();
         arrayGastos.push(objGasto);
         arrayGastosValidacion.push(objGasto);
     });
@@ -79,7 +81,7 @@ function EstablecerComprasYGastos() {
         var objCompra = {};
         objCompra.Producto = row.find(".Producto select").val();
         objCompra.Cantidad = parseInt(row.find(".Cantidad input").val());
-        objCompra.Precio = row.find(".Precio input");
+        objCompra.Precio = row.find(".Precio input").val();
         arrayCompras.push(objCompra);
         arrayComprasValidacion.push(objCompra);
     });
@@ -170,7 +172,7 @@ function AgregarFila() {
     $('<tr id="fila-producto' + contador + '">' +
         '<td class="Producto"><select class="select2js form-control" onchange="RestablecerOpcion()"><option>Seleccionar</option></select></td>' +
         '<td class="Cantidad">' + '<input type="number" min="1" class="form-control" onkeypress="return EntradaCantidad(event)" value="0" onpaste="return false"/>' + '</td>' +
-        '<td class="Precio">' + '<input type="number" min="1" class="form-control" onkeypress="return EntradaPrecio(event)" value="0" onpaste="return false"/>' + '</td>' +
+        '<td class="Precio">' + '<input type="text" class="form-control" onkeypress="return EntradaPrecio(event)" value="0" onpaste="return false"/>' + '</td>' +
         '<td>' + '<button type="button" class="btn btn-danger btn-sm" onclick="EliminarFila(' + contador + ');"><i class="fa fa-trash"></i></button>' + '</td>' +
         '</tr>').appendTo('#tblCompra');
     contador++;

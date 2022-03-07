@@ -84,6 +84,8 @@ function Guardar() {
                 swal("Transacción exitosa!", "Información guardada", "success");
             } else if (res.estado === 0) {
                 swal("Transacción erronea", "El campo es requerido", "warning");
+            } else if (res.estado === 3) {
+                swal("Transacción erronea", "El producto ya existe", "warning");
             } else {
                 swal("Transacción erronea", "La operación no se realizó", "error");
             }

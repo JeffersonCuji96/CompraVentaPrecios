@@ -32,6 +32,12 @@ namespace Negocio
                 {
                     using (var db = new BDVentaCompraEntities())
                     {
+                        bool verificacion = db.TGasto.Any(x=>x.Descripcion==objGasto.Descripcion.Trim());
+                        if (verificacion)
+                        {
+                            estado = 3;
+                            return estado;
+                        }
                         if (objGasto.IdGasto == 0)
                         {
                             db.TGasto.Add(objGasto);

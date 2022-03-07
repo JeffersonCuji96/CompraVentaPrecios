@@ -48,6 +48,12 @@ namespace Negocio
                 {
                     using (var db = new BDVentaCompraEntities())
                     {
+                        bool verificacion = db.TProducto.Any(x => x.Descripcion == objProducto.Descripcion.Trim());
+                        if (verificacion)
+                        {
+                            estado = 3;
+                            return estado;
+                        }
                         if (objProducto.IdProducto == 0)
                         {
                             db.TProducto.Add(objProducto);

@@ -9,3 +9,4 @@ C:\Users\renem\source\repos\CompraVentaPrecios\Datos\obj\Debug\Datos.csproj.Core
 C:\Users\renem\source\repos\CompraVentaPrecios\Datos\obj\Debug\Datos.csproj.CopyComplete
 C:\Users\renem\source\repos\CompraVentaPrecios\Datos\obj\Debug\Datos.dll
 C:\Users\renem\source\repos\CompraVentaPrecios\Datos\obj\Debug\Datos.pdb
+C:\Users\renem\source\repos\CompraVentaPrecios\Datos\obj\Debug\Datos.csprojAssemblyReference.cache

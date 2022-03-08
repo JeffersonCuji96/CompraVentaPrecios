@@ -89,6 +89,7 @@
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\CompraGastoViewModel.cs" />
+    <Compile Include="ViewModels\DetalleCompraViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

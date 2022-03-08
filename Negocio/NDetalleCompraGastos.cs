@@ -58,5 +58,41 @@ namespace Negocio
             }
             return res;
         }
+        public Tuple<List<CompraGastoViewModel>, List<DetalleCompraViewModel>, MontoCompraGasto> ObtenerCompraGasto(DateTime fecha)
+        {
+            using (var db = new BDVentaCompraEntities())
+            {
+                var lstCompraGasto = db.TDetalleGasto.Include(x => x.TGasto)
+                    .Where(x => x.TCompra.Fecha == fecha).Select(x => new CompraGastoViewModel()
+                    {
+                        Gasto = x.TGasto.Descripcion,
+                        Precio = x.Precio,
+                        TotalCosto = x.TCompra.Monto
+                    }).ToList();
+
+                var lstDetalleCompra = db.TDetalleCompra.Include(x => x.TProducto)
+                    .Where(x => x.TCompra.Fecha == fecha).Select(x => new DetalleCompraViewModel()
+                    {
+                        Descripcion = x.TProducto.Descripcion,
+                        Cantidad = x.Cantidad,
+                        Precio = x.Precio,
+                        TotalFactura = x.TotalFactura,
+                        PorcentajeCosto = x.PorcentajeCosto,
+                        CostoUnidad = x.CostoUnidad,
+                        CostoUnitario = x.CostoUnitario,
+                        CostoTotal = x.CostoTotal,
+                        IdCompra = x.TCompra.IdCompra
+                    }).ToList();
+
+                var montos = new MontoCompraGasto();
+                if (lstCompraGasto.Count != 0 && lstDetalleCompra.Count != 0)
+                {
+                    montos.MontoFactura = lstDetalleCompra.Sum(x => x.TotalFactura);
+                    montos.TotalGasto = lstCompraGasto.Sum(x => x.Precio);
+                    montos.PorcentajeCosto = lstDetalleCompra.First().PorcentajeCosto;
+                }
+                return Tuple.Create(lstCompraGasto, lstDetalleCompra, montos);
+            }
+        }
     }
 }

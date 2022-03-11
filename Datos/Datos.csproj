@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataAnnotations\CompraGananciaPorcentaje.cs" />
     <Compile Include="DataAnnotations\DetalleCompraGasto.cs" />
     <Compile Include="DB.Context.cs">
       <AutoGen>True</AutoGen>

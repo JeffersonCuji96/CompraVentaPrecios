@@ -55,6 +55,7 @@
     <Compile Include="NCompra.cs" />
     <Compile Include="NDetalleCompra.cs" />
     <Compile Include="NDetalleCompraGastos.cs" />
+    <Compile Include="NDetalleGananciaVenta.cs" />
     <Compile Include="NDetalleGasto.cs" />
     <Compile Include="NGasto.cs" />
     <Compile Include="NProducto.cs" />

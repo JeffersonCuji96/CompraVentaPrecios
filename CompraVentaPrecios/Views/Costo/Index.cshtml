@@ -15,7 +15,7 @@
                         <div class="form-group">
                             <label class="mr-2 ml-2 mb-2">Fecha de Compra </label>
                             <input type="date" id="txtFechaCompra" class="form-control mr-2 mb-2">
-                            <button id="btnObtenerCostos" type="button" class="btn btn-success mb-2" onclick="ObtenerCostos()">Obtener Costos</button>
+                            <button id="btnObtenerCostos" type="button" class="btn btn-success mb-2" onclick="CalcularCompraGasto()">Obtener Costos</button>
                         </div>
                     </div>
                 </div>
@@ -63,8 +63,8 @@
                         <th class="w125">
                             %Ganancia
                             <div class="form-row ml-1 mt-1">
-                                <input id="txtPorcGanancia" type="text" maxlength="4" class="form-control w75 btn-sm text-center" placeholder="%" onkeypress="return EntradaPrecio(event);" onpaste="return false" />&nbsp;
-                                <button id="btnCalcular" type="button" class="btn btn-info btn-sm" onclick="Calcular()"><i class='fa fa-calculator'></i></button>
+                                <input id="txtPorcGanancia" type="text" maxlength="5" class="form-control w75 btn-sm text-center" placeholder="%" onkeypress="return EntradaPrecio(event);" onpaste="return false" />&nbsp;
+                                <button id="btnCalcular" type="button" class="btn btn-info btn-sm" onclick="CalcularGananciaVenta()"><i class='fa fa-calculator'></i></button>
                             </div>
                         </th>
                         <th class="w80">Precio Venta</th>

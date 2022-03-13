@@ -1,8 +1,9 @@
 ﻿using Datos;
 using Datos.DataAnnotations;
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
+using System.Transactions;
 
 namespace Negocio
 {
@@ -30,5 +31,57 @@ namespace Negocio
             }
             return gananciaVenta;
         }
+
+        public int Guardar(List<DetalleGananciaVenta> gananciaVentas)
+        {
+            int estado = 0;
+            TransactionOptions options = new TransactionOptions();
+            options.Timeout = new TimeSpan(0, 15, 0);
+            using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, options))
+            {
+                using (var db = new BDVentaCompraEntities())
+                {
+                    try
+                    {
+                        var idCompra = gananciaVentas.First().IdCompra;
+                        var verificacionDetalleCompra = db.TGananciaVenta.Any(x => x.IdCompra == idCompra);
+                        if (verificacionDetalleCompra==false)
+                        {
+                            for (int i = 0; i < gananciaVentas.Count; i++)
+                            {
+                                var objGananciaVenta = new TGananciaVenta()
+                                {
+                                    PorcentajeGanancia = gananciaVentas[i].PorcentajeGanancia,
+                                    MontoPorcentajeGanancia = gananciaVentas[i].MontoPorcentajeGanancia,
+                                    PrecioVenta = gananciaVentas[i].PrecioVenta,
+                                    PrecioVentaEstablecido = Convert.ToDecimal(gananciaVentas[i].PrecioVentaEstablecido),
+                                    TotalVenta = gananciaVentas[i].TotalVenta,
+                                    MontoGanancia = gananciaVentas[i].MontoGanancia,
+                                    TotalUtilidadBruta = gananciaVentas[i].TotalUtilidadBruta,
+                                    UnidadesVendidas = gananciaVentas[i].UnidadesVendidas,
+                                    TotalVendido = gananciaVentas[i].TotalVendido,
+                                    Stock = gananciaVentas[i].Stock,
+                                    IdCompra = gananciaVentas[i].IdCompra
+                                };
+                                db.TGananciaVenta.Add(objGananciaVenta);
+                                db.SaveChanges();
+                            }
+                            scope.Complete();
+                            estado = 1;
+                            return estado;
+                        }
+                        estado = 3;
+                    }
+                    catch
+                    {
+                        estado = 2;
+                        scope.Dispose();
+                    }
+                }
+            }
+            return estado;
+        }
+
     }
+
 }

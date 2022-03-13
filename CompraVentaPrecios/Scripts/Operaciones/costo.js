@@ -18,8 +18,14 @@ function CalcularCompraGasto() {
             success: function (x) {
                 if (x.Item1.length !== 0 && x.Item2.length !== 0) {
                     arrayDetalleCompra = Array.from(x.Item2);
+                    HabilitacionPrecioPorcentaje(false);
                     CargarTablaGasto(x);
                     CargarTBodyDetalleGasto(x);
+                    if (x.Item4.length !== 0) {
+                        CargarTBodyGananciaVenta(x.Item4, false);
+                        HabilitacionPrecioPorcentaje(true);
+                        $("#txtPorcGanancia").val(x.Item4[0].PorcentajeGanancia);
+                    }
                 } else {
                     swal("Información no procesada!", "No hay datos que mostrar para la fecha ingresada", "warning");
                 }
@@ -87,7 +93,6 @@ function CalcularGananciaVenta() {
     $(".rowGanancia").remove();
     $(".rowSum2").remove();
     var porcentajeGanancia = $("#txtPorcGanancia").val().replace(",", ".");
-    console.log(porcentajeGanancia);
     if (arrayDetalleCompra.length === 0) {
         swal("Costos", "Primer debe obtener los costos", { className: "swalSize" });
         $("#btnCalcular").attr("disabled", false);
@@ -126,13 +131,20 @@ function CalcularGananciaVenta() {
                     $("#btnCalcular").attr("disabled", false);
                     return;
                 }
-                CargarTBodyGananciaVenta(res);
+                CargarTBodyGananciaVenta(res,true);
                 $("#btnCalcular").attr("disabled", false);
             }
         });
     }
 }
-function CargarTBodyGananciaVenta(res) {
+function HabilitacionPrecioPorcentaje(estado) {
+    $(".txtPrecioEstablecido").attr("disabled", estado);
+    $(".btnPrecioEstablecido").attr("disabled", estado);
+    $("#txtPorcGanancia").attr("disabled", estado);
+    $("#btnCalcular").attr("disabled", estado);
+    $("#btnGananciaVenta").attr("disabled", estado);
+}
+function CargarTBodyGananciaVenta(res,estado) {
     let sumaMontoPorcentaje = 0;
     let sumaTotalVenta = 0;
     let sumaUtilidadBruta = 0;
@@ -144,14 +156,14 @@ function CargarTBodyGananciaVenta(res) {
             '<td id="MontoPorcentaje' + i + '" class="rowGanancia align-middle text-right">' + res[i].MontoPorcentajeGanancia.toFixed(2).replace(".", ",") + '</td>' +
             '<td id="PrecioVenta' + i + '" class="rowGanancia align-middle text-right">' + res[i].PrecioVenta.toFixed(2).replace(".", ",") + '</td>' +
             '<td class="rowGanancia"><div class="row ml-2">' +
-            '<input id="PrecioEstablecido' + i + '" type="text" class="form-control w80 btn-sm text-right" onkeypress="return EntradaPrecio(event);" onpaste="return false" value="' + res[i].PrecioVentaEstablecido.toFixed(2).replace(".", ",") + '"/>&nbsp;' +
-            '<button type="button" class="btn btn-info btn-sm" onclick="CalcularPrecioEstablecido(' + i + ')"><i class="fa fa-calculator"></i></button ></div></td >' +
+            '<input id="PrecioEstablecido' + i + '" type="text" class="form-control w80 btn-sm text-right txtPrecioEstablecido" onkeypress="return EntradaPrecio(event);" onpaste="return false" value="' + res[i].PrecioVentaEstablecido.toFixed(2).replace(".", ",") + '"/>&nbsp;' +
+            '<button type="button" class="btn btn-info btn-sm btnPrecioEstablecido" onclick="CalcularPrecioEstablecido(' + i + ')"><i class="fa fa-calculator"></i></button ></div></td >' +
             '<td id="TotalVenta' + i + '" class="rowGanancia align-middle text-right">' + res[i].TotalVenta.toFixed(2).replace(".", ",") + '</td>' +
             '<td id="Ganancia' + i + '" class="rowGanancia align-middle text-right">' + res[i].MontoGanancia.toFixed(2).replace(".", ",") + '</td>' +
             '<td id="UtilidadBruta' + i + '" class="rowGanancia align-middle text-right">' + res[i].TotalUtilidadBruta.toFixed(2).replace(".", ",") + '</td>' +
             '<td class="rowGanancia"><div class="row ml-2">' +
-            '<input id="CantidadVendida' + i + '" type="text" class="form-control w80 btn-sm text-center" onkeypress="return EntradaCantidad(event);" onpaste="return false" value="' + res[i].UnidadesVendidas + '"/>&nbsp;' +
-            '<button id="btnVendido' + i + '" type="button" class="btn btn-info btn-sm" onclick="CalcularUnidadesVendidas(' + i + ');"><i class="fa fa-calculator"></i></button ></div></td >' +
+            '<input id="CantidadVendida' + i + '" type="text" class="form-control w80 btn-sm text-center txtCantidadVendida" onkeypress="return EntradaCantidad(event);" onpaste="return false" value="' + res[i].UnidadesVendidas + '"/>&nbsp;' +
+            '<button id="btnVendido' + i + '" type="button" class="btn btn-info btn-sm btnCantidadVendida" onclick="CalcularUnidadesVendidas(' + i + ');"><i class="fa fa-calculator"></i></button ></div></td >' +
             '<td id="TotalVendido' + i + '" class="rowGanancia align-middle text-right">' + res[i].TotalVendido.toFixed(2).replace(".", ",") + '</td>' +
             '<td id="Stock' + i + '" class="rowGanancia align-middle text-center">' + res[i].Stock + '</td>'
         );
@@ -160,8 +172,7 @@ function CargarTBodyGananciaVenta(res) {
         sumaUtilidadBruta += res[i].TotalUtilidadBruta;
         sumaUnidadesVendidas += res[i].UnidadesVendidas;
         sumaTotalVendido += res[i].TotalVendido;
-        $("#CantidadVendida" + i).attr("disabled", true);
-        $("#btnVendido" + i).attr("disabled", true);
+        HabilitacionCantidad(estado);
     }
     CargarTFootGananciaVenta(sumaMontoPorcentaje, sumaTotalVenta, sumaUtilidadBruta, sumaUnidadesVendidas, sumaTotalVendido);
 }
@@ -198,4 +209,100 @@ function EntradaPrecio(evt) {
 function EntradaCantidad(evt) {
     var charCode = (evt.which) ? evt.which : event.keyCode;
     return !(charCode > 31 && (charCode < 48 || charCode > 57));
+}
+
+function CalcularPrecioEstablecido(index) {
+    var precioEstablecido = parseFloat($("#PrecioEstablecido" + index).val().replace(",", ".")).toFixed(2);
+    $("#PrecioEstablecido" + index).val(precioEstablecido.replace(".", ","));
+    var precioVenta = parseFloat($("#PrecioVenta" + index).text().replace(",", ".")).toFixed(2);
+    if (precioEstablecido < precioVenta) {
+        swal("Venta", "El precio establecido no puede ser menor al precio de venta", "warning").then(() => {
+            $("#PrecioEstablecido" + index).val(precioVenta.replace(".", ","));
+            $("#PrecioEstablecido" + index).focus();
+        });
+    } else {
+        var stock = arrayDetalleCompra[index].Cantidad;
+        var costoUnitario = arrayDetalleCompra[index].CostoUnitario;
+        var totalVenta = precioEstablecido * stock;
+        var ganancia = precioEstablecido - costoUnitario;
+        var utilidadBruta = (precioEstablecido - costoUnitario) * stock;
+        $("#TotalVenta" + index).text(totalVenta.toFixed(2).replace(".", ","));
+        $("#Ganancia" + index).text(ganancia.toFixed(2).replace(".", ","));
+        $("#UtilidadBruta" + index).text(utilidadBruta.toFixed(2).replace(".", ","));
+        SumarMontosGananciaVenta();
+    }
+}
+function SumarMontosGananciaVenta() {
+    $(".rowSum2").remove();
+    let sumaMontoPorcentaje = 0;
+    let sumaTotalVenta = 0;
+    let sumaUtilidadBruta = 0;
+    let sumaUnidadesVendidas = 0;
+    let sumaTotalVendido = 0;
+    for (let i = 0; i < arrayDetalleCompra.length; i++) {
+        sumaMontoPorcentaje += parseFloat($("#MontoPorcentaje" + i).text().replace(",", "."));
+        sumaTotalVenta += parseFloat($("#TotalVenta" + i).text().replace(",", "."));
+        sumaUtilidadBruta += parseFloat($("#UtilidadBruta" + i).text().replace(",", "."));
+        sumaUnidadesVendidas += parseInt($("#CantidadVendida" + i).val());
+        sumaTotalVendido += parseFloat($("#TotalVendido" + i).text().replace(",", "."));
+    }
+    CargarTFootGananciaVenta(sumaMontoPorcentaje, sumaTotalVenta, sumaUtilidadBruta, sumaUnidadesVendidas, sumaTotalVendido);
+}
+function GuardarGananciaVenta() {
+    $("#btnGananciaVenta").attr("disabled", true);
+    if (arrayDetalleCompra.length === 0) {
+        swal("Costos", "Primer debe obtener los costos", { className: "swalSize" });
+        $("#btnGananciaVenta").attr("disabled", false);
+    } else {
+        arrayGananciaVenta = [];
+        for (let i = 0; i < arrayDetalleCompra.length; i++) {
+            var objGananciaVenta = {
+                PorcentajeGanancia: parseFloat($("#PorcentajeGanancia" + i).text().replace(",", ".")),
+                MontoPorcentajeGanancia: parseFloat($("#MontoPorcentaje" + i).text().replace(",", ".")),
+                PrecioVenta: parseFloat($("#PrecioVenta" + i).text().replace(",", ".")),
+                PrecioVentaEstablecido: $("#PrecioEstablecido" + i).val(),
+                TotalVenta: parseFloat($("#TotalVenta" + i).text().replace(",", ".")),
+                MontoGanancia: parseFloat($("#Ganancia" + i).text().replace(",", ".")),
+                TotalUtilidadBruta: parseFloat($("#UtilidadBruta" + i).text().replace(",", ".")),
+                UnidadesVendidas: 0,
+                TotalVendido: 0,
+                Stock: parseInt($("#Stock" + i).text()),
+                IdCompra: arrayDetalleCompra[i].IdCompra
+            };
+            arrayGananciaVenta.push(objGananciaVenta);
+        }
+        jQuery.ajax({
+            url: urlHost + "/Costo/GuardarGananciaVenta",
+            type: "POST",
+            data: JSON.stringify(arrayGananciaVenta),
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (res) {
+                if (res.estado === 0) {
+                    let list = '';
+                    for (var i = 0; i < res.errores.length; i++) {
+                        list += i + 1 + ". " + res.errores[i] + '\n';
+                    }
+                    $("#btnGananciaVenta").attr("disabled", false);
+                    swal("Error", list);
+                } else if (res.estado === 1) {
+                    HabilitacionPrecioPorcentaje(true);
+                    HabilitacionCantidad(false);
+                    swal("Transacción exitosa!", "Información guardada", "success");
+                } else if (res.estado === 3) {
+                    HabilitacionPrecioPorcentaje(true);
+                    HabilitacionCantidad(false);
+                    swal("Transacción erronea!", "El detalle ya se encuentra ingresado", "warning");
+                } else {
+                    $("#btnGananciaVenta").attr("disabled", false);
+                    swal("Transacción erronea", "La operación no se realizó", "error");
+                }
+            }
+        });
+    }
+}
+
+function HabilitacionCantidad(estado) {
+    $(".txtCantidadVendida").attr("disabled", estado);
+    $(".btnCantidadVendida").attr("disabled", estado);
 }

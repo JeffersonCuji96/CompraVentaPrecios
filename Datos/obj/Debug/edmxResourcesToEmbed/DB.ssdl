@@ -38,7 +38,7 @@
     </Key>
     <Property Name="IdGanancia" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="PorcentajeGanancia" Type="decimal" Precision="4" Scale="2" Nullable="false" />
-    <Property Name="MontoPorcentajeGanancia" Type="decimal" Precision="4" Scale="2" Nullable="false" />
+    <Property Name="MontoPorcentajeGanancia" Type="decimal" Precision="9" Scale="2" Nullable="false" />
     <Property Name="PrecioVenta" Type="decimal" Precision="9" Scale="2" Nullable="false" />
     <Property Name="PrecioVentaEstablecido" Type="decimal" Precision="9" Scale="2" Nullable="false" />
     <Property Name="TotalVenta" Type="decimal" Precision="9" Scale="2" Nullable="false" />

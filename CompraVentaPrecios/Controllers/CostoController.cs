@@ -38,5 +38,22 @@ namespace CompraVentaPrecios.Controllers
                 return Json(gananciaVenta, JsonRequestBehavior.AllowGet);
             }
         }
+
+        [HttpPost]
+        public JsonResult GuardarGananciaVenta(List<DetalleGananciaVenta> gananciaVentas)
+        {
+            int estado = 0;
+            if (!ModelState.IsValid)
+            {
+                var lstErrores = ModelState.Values.Where(E => E.Errors.Count > 0).SelectMany(E => E.Errors).Select(E => E.ErrorMessage).ToList();
+                var errores = new HashSet<string>(lstErrores);
+                return Json(new { errores, estado }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                estado = nDetalleGananciaVenta.Guardar(gananciaVentas);
+                return Json(new { estado }, JsonRequestBehavior.AllowGet);
+            }
+        }
     }
 }

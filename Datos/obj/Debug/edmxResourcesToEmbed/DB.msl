@@ -36,24 +36,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="TGananciaVenta">
-      <EntityTypeMapping TypeName="BDVentaCompraModel.TGananciaVenta">
-        <MappingFragment StoreEntitySet="TGananciaVenta">
-          <ScalarProperty Name="IdGanancia" ColumnName="IdGanancia" />
-          <ScalarProperty Name="PorcentajeGanancia" ColumnName="PorcentajeGanancia" />
-          <ScalarProperty Name="MontoPorcentajeGanancia" ColumnName="MontoPorcentajeGanancia" />
-          <ScalarProperty Name="PrecioVenta" ColumnName="PrecioVenta" />
-          <ScalarProperty Name="PrecioVentaEstablecido" ColumnName="PrecioVentaEstablecido" />
-          <ScalarProperty Name="TotalVenta" ColumnName="TotalVenta" />
-          <ScalarProperty Name="MontoGanancia" ColumnName="MontoGanancia" />
-          <ScalarProperty Name="TotalUtilidadBruta" ColumnName="TotalUtilidadBruta" />
-          <ScalarProperty Name="UnidadesVendidas" ColumnName="UnidadesVendidas" />
-          <ScalarProperty Name="TotalVendido" ColumnName="TotalVendido" />
-          <ScalarProperty Name="Stock" ColumnName="Stock" />
-          <ScalarProperty Name="IdCompra" ColumnName="IdCompra" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="TGasto">
       <EntityTypeMapping TypeName="BDVentaCompraModel.TGasto">
         <MappingFragment StoreEntitySet="TGasto">
@@ -67,6 +49,24 @@
         <MappingFragment StoreEntitySet="TProducto">
           <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
           <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TGananciaVenta">
+      <EntityTypeMapping TypeName="BDVentaCompraModel.TGananciaVenta">
+        <MappingFragment StoreEntitySet="TGananciaVenta">
+          <ScalarProperty Name="IdCompra" ColumnName="IdCompra" />
+          <ScalarProperty Name="Stock" ColumnName="Stock" />
+          <ScalarProperty Name="TotalVendido" ColumnName="TotalVendido" />
+          <ScalarProperty Name="UnidadesVendidas" ColumnName="UnidadesVendidas" />
+          <ScalarProperty Name="TotalUtilidadBruta" ColumnName="TotalUtilidadBruta" />
+          <ScalarProperty Name="MontoGanancia" ColumnName="MontoGanancia" />
+          <ScalarProperty Name="TotalVenta" ColumnName="TotalVenta" />
+          <ScalarProperty Name="PrecioVentaEstablecido" ColumnName="PrecioVentaEstablecido" />
+          <ScalarProperty Name="PrecioVenta" ColumnName="PrecioVenta" />
+          <ScalarProperty Name="MontoPorcentajeGanancia" ColumnName="MontoPorcentajeGanancia" />
+          <ScalarProperty Name="PorcentajeGanancia" ColumnName="PorcentajeGanancia" />
+          <ScalarProperty Name="IdGanancia" ColumnName="IdGanancia" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

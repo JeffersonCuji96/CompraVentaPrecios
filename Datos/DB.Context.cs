@@ -29,8 +29,8 @@ namespace Datos
         public virtual DbSet<TCompra> TCompra { get; set; }
         public virtual DbSet<TDetalleCompra> TDetalleCompra { get; set; }
         public virtual DbSet<TDetalleGasto> TDetalleGasto { get; set; }
-        public virtual DbSet<TGananciaVenta> TGananciaVenta { get; set; }
         public virtual DbSet<TGasto> TGasto { get; set; }
         public virtual DbSet<TProducto> TProducto { get; set; }
+        public virtual DbSet<TGananciaVenta> TGananciaVenta { get; set; }
     }
 }

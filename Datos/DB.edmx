@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="BDVentaCompraModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="BDVentaCompraModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="TCompra">
           <Key>
             <PropertyRef Name="IdCompra" />
@@ -43,7 +43,7 @@
           </Key>
           <Property Name="IdGanancia" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PorcentajeGanancia" Type="decimal" Precision="4" Scale="2" Nullable="false" />
-          <Property Name="MontoPorcentajeGanancia" Type="decimal" Precision="4" Scale="2" Nullable="false" />
+          <Property Name="MontoPorcentajeGanancia" Type="decimal" Precision="9" Scale="2" Nullable="false" />
           <Property Name="PrecioVenta" Type="decimal" Precision="9" Scale="2" Nullable="false" />
           <Property Name="PrecioVentaEstablecido" Type="decimal" Precision="9" Scale="2" Nullable="false" />
           <Property Name="TotalVenta" Type="decimal" Precision="9" Scale="2" Nullable="false" />
@@ -156,8 +156,7 @@
             <End Role="TGananciaVenta" EntitySet="TGananciaVenta" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="BDVentaCompraModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -170,7 +169,7 @@
           <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="TDetalleCompra" Relationship="Self.FK_Compra_DetalleCompra" FromRole="TCompra" ToRole="TDetalleCompra" />
           <NavigationProperty Name="TDetalleGasto" Relationship="Self.FK_TDetalleGasto_TCompra" FromRole="TCompra" ToRole="TDetalleGasto" />
-          <NavigationProperty Name="TGananciaVenta" Relationship="Self.FK_TGananciaVenta_TCompra" FromRole="TCompra" ToRole="TGananciaVenta" />
+          <NavigationProperty Name="TGananciaVenta" Relationship="BDVentaCompraModel.FK_TGananciaVenta_TCompra" FromRole="TCompra" ToRole="TGananciaVenta" />
         </EntityType>
         <EntityType Name="TDetalleCompra">
           <Key>
@@ -199,24 +198,6 @@
           <Property Name="IdCompra" Type="Int64" Nullable="false" />
           <NavigationProperty Name="TCompra" Relationship="Self.FK_TDetalleGasto_TCompra" FromRole="TDetalleGasto" ToRole="TCompra" />
           <NavigationProperty Name="TGasto" Relationship="Self.FK_Gasto_DetalleGasto" FromRole="TDetalleGasto" ToRole="TGasto" />
-        </EntityType>
-        <EntityType Name="TGananciaVenta">
-          <Key>
-            <PropertyRef Name="IdGanancia" />
-          </Key>
-          <Property Name="IdGanancia" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PorcentajeGanancia" Type="Decimal" Precision="4" Scale="2" Nullable="false" />
-          <Property Name="MontoPorcentajeGanancia" Type="Decimal" Precision="4" Scale="2" Nullable="false" />
-          <Property Name="PrecioVenta" Type="Decimal" Precision="9" Scale="2" Nullable="false" />
-          <Property Name="PrecioVentaEstablecido" Type="Decimal" Precision="9" Scale="2" Nullable="false" />
-          <Property Name="TotalVenta" Type="Decimal" Precision="9" Scale="2" Nullable="false" />
-          <Property Name="MontoGanancia" Type="Decimal" Precision="9" Scale="2" Nullable="false" />
-          <Property Name="TotalUtilidadBruta" Type="Decimal" Precision="9" Scale="2" Nullable="false" />
-          <Property Name="UnidadesVendidas" Type="Int32" Nullable="false" />
-          <Property Name="TotalVendido" Type="Decimal" Precision="9" Scale="2" Nullable="false" />
-          <Property Name="Stock" Type="Int32" Nullable="false" />
-          <Property Name="IdCompra" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="TCompra" Relationship="Self.FK_TGananciaVenta_TCompra" FromRole="TGananciaVenta" ToRole="TCompra" />
         </EntityType>
         <EntityType Name="TGasto">
           <Key>
@@ -258,18 +239,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_TGananciaVenta_TCompra">
-          <End Role="TCompra" Type="Self.TCompra" Multiplicity="1" />
-          <End Role="TGananciaVenta" Type="Self.TGananciaVenta" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TCompra">
-              <PropertyRef Name="IdCompra" />
-            </Principal>
-            <Dependent Role="TGananciaVenta">
-              <PropertyRef Name="IdCompra" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Producto_DetalleCompra">
           <End Role="TProducto" Type="Self.TProducto" Multiplicity="1" />
           <End Role="TDetalleCompra" Type="Self.TDetalleCompra" Multiplicity="*" />
@@ -298,7 +267,6 @@
           <EntitySet Name="TCompra" EntityType="Self.TCompra" />
           <EntitySet Name="TDetalleCompra" EntityType="Self.TDetalleCompra" />
           <EntitySet Name="TDetalleGasto" EntityType="Self.TDetalleGasto" />
-          <EntitySet Name="TGananciaVenta" EntityType="Self.TGananciaVenta" />
           <EntitySet Name="TGasto" EntityType="Self.TGasto" />
           <EntitySet Name="TProducto" EntityType="Self.TProducto" />
           <AssociationSet Name="FK_Compra_DetalleCompra" Association="Self.FK_Compra_DetalleCompra">
@@ -309,10 +277,6 @@
             <End Role="TCompra" EntitySet="TCompra" />
             <End Role="TDetalleGasto" EntitySet="TDetalleGasto" />
           </AssociationSet>
-          <AssociationSet Name="FK_TGananciaVenta_TCompra" Association="Self.FK_TGananciaVenta_TCompra">
-            <End Role="TCompra" EntitySet="TCompra" />
-            <End Role="TGananciaVenta" EntitySet="TGananciaVenta" />
-          </AssociationSet>
           <AssociationSet Name="FK_Producto_DetalleCompra" Association="Self.FK_Producto_DetalleCompra">
             <End Role="TProducto" EntitySet="TProducto" />
             <End Role="TDetalleCompra" EntitySet="TDetalleCompra" />
@@ -321,7 +285,42 @@
             <End Role="TGasto" EntitySet="TGasto" />
             <End Role="TDetalleGasto" EntitySet="TDetalleGasto" />
           </AssociationSet>
+          <EntitySet Name="TGananciaVenta" EntityType="BDVentaCompraModel.TGananciaVenta" />
+          <AssociationSet Name="FK_TGananciaVenta_TCompra" Association="BDVentaCompraModel.FK_TGananciaVenta_TCompra">
+            <End Role="TCompra" EntitySet="TCompra" />
+            <End Role="TGananciaVenta" EntitySet="TGananciaVenta" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="TGananciaVenta">
+          <Key>
+            <PropertyRef Name="IdGanancia" />
+          </Key>
+          <Property Name="IdGanancia" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PorcentajeGanancia" Type="Decimal" Nullable="false" Precision="4" Scale="2" />
+          <Property Name="MontoPorcentajeGanancia" Type="Decimal" Nullable="false" Precision="9" Scale="2" />
+          <Property Name="PrecioVenta" Type="Decimal" Nullable="false" Precision="9" Scale="2" />
+          <Property Name="PrecioVentaEstablecido" Type="Decimal" Nullable="false" Precision="9" Scale="2" />
+          <Property Name="TotalVenta" Type="Decimal" Nullable="false" Precision="9" Scale="2" />
+          <Property Name="MontoGanancia" Type="Decimal" Nullable="false" Precision="9" Scale="2" />
+          <Property Name="TotalUtilidadBruta" Type="Decimal" Nullable="false" Precision="9" Scale="2" />
+          <Property Name="UnidadesVendidas" Type="Int32" Nullable="false" />
+          <Property Name="TotalVendido" Type="Decimal" Nullable="false" Precision="9" Scale="2" />
+          <Property Name="Stock" Type="Int32" Nullable="false" />
+          <Property Name="IdCompra" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="TCompra" Relationship="BDVentaCompraModel.FK_TGananciaVenta_TCompra" FromRole="TGananciaVenta" ToRole="TCompra" />
+        </EntityType>
+        <Association Name="FK_TGananciaVenta_TCompra">
+          <End Type="BDVentaCompraModel.TCompra" Role="TCompra" Multiplicity="1" />
+          <End Type="BDVentaCompraModel.TGananciaVenta" Role="TGananciaVenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TCompra">
+              <PropertyRef Name="IdCompra" />
+            </Principal>
+            <Dependent Role="TGananciaVenta">
+              <PropertyRef Name="IdCompra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -363,24 +362,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TGananciaVenta">
-            <EntityTypeMapping TypeName="BDVentaCompraModel.TGananciaVenta">
-              <MappingFragment StoreEntitySet="TGananciaVenta">
-                <ScalarProperty Name="IdGanancia" ColumnName="IdGanancia" />
-                <ScalarProperty Name="PorcentajeGanancia" ColumnName="PorcentajeGanancia" />
-                <ScalarProperty Name="MontoPorcentajeGanancia" ColumnName="MontoPorcentajeGanancia" />
-                <ScalarProperty Name="PrecioVenta" ColumnName="PrecioVenta" />
-                <ScalarProperty Name="PrecioVentaEstablecido" ColumnName="PrecioVentaEstablecido" />
-                <ScalarProperty Name="TotalVenta" ColumnName="TotalVenta" />
-                <ScalarProperty Name="MontoGanancia" ColumnName="MontoGanancia" />
-                <ScalarProperty Name="TotalUtilidadBruta" ColumnName="TotalUtilidadBruta" />
-                <ScalarProperty Name="UnidadesVendidas" ColumnName="UnidadesVendidas" />
-                <ScalarProperty Name="TotalVendido" ColumnName="TotalVendido" />
-                <ScalarProperty Name="Stock" ColumnName="Stock" />
-                <ScalarProperty Name="IdCompra" ColumnName="IdCompra" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="TGasto">
             <EntityTypeMapping TypeName="BDVentaCompraModel.TGasto">
               <MappingFragment StoreEntitySet="TGasto">
@@ -394,6 +375,24 @@
               <MappingFragment StoreEntitySet="TProducto">
                 <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TGananciaVenta">
+            <EntityTypeMapping TypeName="BDVentaCompraModel.TGananciaVenta">
+              <MappingFragment StoreEntitySet="TGananciaVenta">
+                <ScalarProperty Name="IdCompra" ColumnName="IdCompra" />
+                <ScalarProperty Name="Stock" ColumnName="Stock" />
+                <ScalarProperty Name="TotalVendido" ColumnName="TotalVendido" />
+                <ScalarProperty Name="UnidadesVendidas" ColumnName="UnidadesVendidas" />
+                <ScalarProperty Name="TotalUtilidadBruta" ColumnName="TotalUtilidadBruta" />
+                <ScalarProperty Name="MontoGanancia" ColumnName="MontoGanancia" />
+                <ScalarProperty Name="TotalVenta" ColumnName="TotalVenta" />
+                <ScalarProperty Name="PrecioVentaEstablecido" ColumnName="PrecioVentaEstablecido" />
+                <ScalarProperty Name="PrecioVenta" ColumnName="PrecioVenta" />
+                <ScalarProperty Name="MontoPorcentajeGanancia" ColumnName="MontoPorcentajeGanancia" />
+                <ScalarProperty Name="PorcentajeGanancia" ColumnName="PorcentajeGanancia" />
+                <ScalarProperty Name="IdGanancia" ColumnName="IdGanancia" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

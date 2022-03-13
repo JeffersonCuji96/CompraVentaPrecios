@@ -58,10 +58,15 @@ namespace Negocio
             }
             return res;
         }
-        public Tuple<List<CompraGastoViewModel>, List<DetalleCompraViewModel>, MontoCompraGasto> ObtenerCompraGasto(DateTime fecha)
+        public Tuple<List<CompraGastoViewModel>, List<DetalleCompraViewModel>, MontoCompraGasto, List<DetalleGananciaVenta>> ObtenerCompraGasto(DateTime fecha)
         {
             using (var db = new BDVentaCompraEntities())
             {
+                var montos = new MontoCompraGasto();
+                var lstGananciaVenta = new List<DetalleGananciaVenta>();
+                bool verificacionGananciaVenta = false;
+                long idCompra = 0;
+
                 var lstCompraGasto = db.TDetalleGasto.Include(x => x.TGasto)
                     .Where(x => x.TCompra.Fecha == fecha).Select(x => new CompraGastoViewModel()
                     {
@@ -84,14 +89,35 @@ namespace Negocio
                         IdCompra = x.TCompra.IdCompra
                     }).ToList();
 
-                var montos = new MontoCompraGasto();
                 if (lstCompraGasto.Count != 0 && lstDetalleCompra.Count != 0)
                 {
                     montos.MontoFactura = lstDetalleCompra.Sum(x => x.TotalFactura);
                     montos.TotalGasto = lstCompraGasto.Sum(x => x.Precio);
                     montos.PorcentajeCosto = lstDetalleCompra.First().PorcentajeCosto;
+                    idCompra = lstDetalleCompra.First().IdCompra;
                 }
-                return Tuple.Create(lstCompraGasto, lstDetalleCompra, montos);
+                if (idCompra != 0)
+                {
+                    verificacionGananciaVenta = db.TGananciaVenta.Any(x => x.IdCompra == idCompra);
+                    if (verificacionGananciaVenta)
+                    {
+                        lstGananciaVenta = db.TGananciaVenta.Where(x => x.IdCompra == idCompra).Select(x => new DetalleGananciaVenta()
+                        {
+                            PorcentajeGanancia = x.PorcentajeGanancia,
+                            MontoPorcentajeGanancia = x.MontoPorcentajeGanancia,
+                            PrecioVenta = x.PrecioVenta,
+                            PrecioVentaEstablecido = x.PrecioVentaEstablecido,
+                            TotalVenta = x.TotalVenta,
+                            MontoGanancia = x.MontoGanancia,
+                            TotalUtilidadBruta = x.TotalUtilidadBruta,
+                            UnidadesVendidas = x.UnidadesVendidas,
+                            TotalVendido = x.TotalVendido,
+                            Stock = x.Stock,
+                            IdCompra = x.IdCompra
+                        }).ToList();
+                    }
+                }
+                return Tuple.Create(lstCompraGasto, lstDetalleCompra, montos, lstGananciaVenta);
             }
         }
     }

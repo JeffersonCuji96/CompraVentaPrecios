@@ -8,14 +8,14 @@
         <EntityTypeShape EntityType="BDVentaCompraModel.TCompra" Width="1.5" PointX="0.75" PointY="5.5" IsExpanded="true" />
         <EntityTypeShape EntityType="BDVentaCompraModel.TDetalleCompra" Width="1.5" PointX="3" PointY="5" IsExpanded="true" />
         <EntityTypeShape EntityType="BDVentaCompraModel.TDetalleGasto" Width="1.5" PointX="6" PointY="5.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="BDVentaCompraModel.TGananciaVenta" Width="1.5" PointX="3" PointY="11.875" IsExpanded="true" />
         <EntityTypeShape EntityType="BDVentaCompraModel.TGasto" Width="1.5" PointX="3.75" PointY="1.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BDVentaCompraModel.TProducto" Width="1.5" PointX="0.75" PointY="2.75" IsExpanded="true" />
         <AssociationConnector Association="BDVentaCompraModel.FK_Compra_DetalleCompra" ManuallyRouted="false" />
         <AssociationConnector Association="BDVentaCompraModel.FK_TDetalleGasto_TCompra" ManuallyRouted="false" />
-        <AssociationConnector Association="BDVentaCompraModel.FK_TGananciaVenta_TCompra" ManuallyRouted="false" />
         <AssociationConnector Association="BDVentaCompraModel.FK_Producto_DetalleCompra" ManuallyRouted="false" />
         <AssociationConnector Association="BDVentaCompraModel.FK_Gasto_DetalleGasto" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="BDVentaCompraModel.TGananciaVenta" Width="1.5" PointX="3" PointY="9.875" />
+        <AssociationConnector Association="BDVentaCompraModel.FK_TGananciaVenta_TCompra" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

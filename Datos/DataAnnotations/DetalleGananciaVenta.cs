@@ -4,6 +4,8 @@ namespace Datos.DataAnnotations
 {
     public class DetalleGananciaVenta
     {
+        public long IdGanancia { get; set; }
+
         [Required(ErrorMessage = "Porcentaje de ganancia requerido")]
         [Range(10, 99, ErrorMessage = "Porcentaje mínimo del 10% y máximo del 99%")]
         [RegularExpression(@"^\d+(.\d{1,2})?$", ErrorMessage = "Porcentaje de ganancia, admite coma y 2 decimales")]

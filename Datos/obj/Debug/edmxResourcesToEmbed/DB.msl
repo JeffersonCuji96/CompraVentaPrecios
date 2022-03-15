@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="BDVentaCompraModelStoreContainer" CdmEntityContainer="BDVentaCompraEntities">
+  <EntityContainerMapping StorageEntityContainer="DBCostosMercaderiaModelStoreContainer" CdmEntityContainer="DBCostosMercaderiaEntities">
     <EntitySetMapping Name="TCompra">
-      <EntityTypeMapping TypeName="BDVentaCompraModel.TCompra">
+      <EntityTypeMapping TypeName="DBCostosMercaderiaModel.TCompra">
         <MappingFragment StoreEntitySet="TCompra">
           <ScalarProperty Name="IdCompra" ColumnName="IdCompra" />
           <ScalarProperty Name="Monto" ColumnName="Monto" />
@@ -11,7 +11,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="TDetalleCompra">
-      <EntityTypeMapping TypeName="BDVentaCompraModel.TDetalleCompra">
+      <EntityTypeMapping TypeName="DBCostosMercaderiaModel.TDetalleCompra">
         <MappingFragment StoreEntitySet="TDetalleCompra">
           <ScalarProperty Name="IdDetalleCompra" ColumnName="IdDetalleCompra" />
           <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
@@ -27,7 +27,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="TDetalleGasto">
-      <EntityTypeMapping TypeName="BDVentaCompraModel.TDetalleGasto">
+      <EntityTypeMapping TypeName="DBCostosMercaderiaModel.TDetalleGasto">
         <MappingFragment StoreEntitySet="TDetalleGasto">
           <ScalarProperty Name="IdDetalleGasto" ColumnName="IdDetalleGasto" />
           <ScalarProperty Name="Precio" ColumnName="Precio" />
@@ -36,8 +36,26 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="TGananciaVenta">
+      <EntityTypeMapping TypeName="DBCostosMercaderiaModel.TGananciaVenta">
+        <MappingFragment StoreEntitySet="TGananciaVenta">
+          <ScalarProperty Name="IdGanancia" ColumnName="IdGanancia" />
+          <ScalarProperty Name="PorcentajeGanancia" ColumnName="PorcentajeGanancia" />
+          <ScalarProperty Name="MontoPorcentajeGanancia" ColumnName="MontoPorcentajeGanancia" />
+          <ScalarProperty Name="PrecioVenta" ColumnName="PrecioVenta" />
+          <ScalarProperty Name="PrecioVentaEstablecido" ColumnName="PrecioVentaEstablecido" />
+          <ScalarProperty Name="TotalVenta" ColumnName="TotalVenta" />
+          <ScalarProperty Name="MontoGanancia" ColumnName="MontoGanancia" />
+          <ScalarProperty Name="TotalUtilidadBruta" ColumnName="TotalUtilidadBruta" />
+          <ScalarProperty Name="UnidadesVendidas" ColumnName="UnidadesVendidas" />
+          <ScalarProperty Name="TotalVendido" ColumnName="TotalVendido" />
+          <ScalarProperty Name="Stock" ColumnName="Stock" />
+          <ScalarProperty Name="IdCompra" ColumnName="IdCompra" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="TGasto">
-      <EntityTypeMapping TypeName="BDVentaCompraModel.TGasto">
+      <EntityTypeMapping TypeName="DBCostosMercaderiaModel.TGasto">
         <MappingFragment StoreEntitySet="TGasto">
           <ScalarProperty Name="IdGasto" ColumnName="IdGasto" />
           <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
@@ -45,28 +63,10 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="TProducto">
-      <EntityTypeMapping TypeName="BDVentaCompraModel.TProducto">
+      <EntityTypeMapping TypeName="DBCostosMercaderiaModel.TProducto">
         <MappingFragment StoreEntitySet="TProducto">
           <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
           <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="TGananciaVenta">
-      <EntityTypeMapping TypeName="BDVentaCompraModel.TGananciaVenta">
-        <MappingFragment StoreEntitySet="TGananciaVenta">
-          <ScalarProperty Name="IdCompra" ColumnName="IdCompra" />
-          <ScalarProperty Name="Stock" ColumnName="Stock" />
-          <ScalarProperty Name="TotalVendido" ColumnName="TotalVendido" />
-          <ScalarProperty Name="UnidadesVendidas" ColumnName="UnidadesVendidas" />
-          <ScalarProperty Name="TotalUtilidadBruta" ColumnName="TotalUtilidadBruta" />
-          <ScalarProperty Name="MontoGanancia" ColumnName="MontoGanancia" />
-          <ScalarProperty Name="TotalVenta" ColumnName="TotalVenta" />
-          <ScalarProperty Name="PrecioVentaEstablecido" ColumnName="PrecioVentaEstablecido" />
-          <ScalarProperty Name="PrecioVenta" ColumnName="PrecioVenta" />
-          <ScalarProperty Name="MontoPorcentajeGanancia" ColumnName="MontoPorcentajeGanancia" />
-          <ScalarProperty Name="PorcentajeGanancia" ColumnName="PorcentajeGanancia" />
-          <ScalarProperty Name="IdGanancia" ColumnName="IdGanancia" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

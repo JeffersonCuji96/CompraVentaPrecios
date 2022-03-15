@@ -56,6 +56,7 @@
     <Compile Include="DataAnnotations\CompraGananciaPorcentaje.cs" />
     <Compile Include="DataAnnotations\DetalleCompraGasto.cs" />
     <Compile Include="DataAnnotations\DetalleGananciaVenta.cs" />
+    <Compile Include="DataAnnotations\UnidadesVenta.cs" />
     <Compile Include="DB.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -92,6 +93,7 @@
     </Compile>
     <Compile Include="ViewModels\CompraGastoViewModel.cs" />
     <Compile Include="ViewModels\DetalleCompraViewModel.cs" />
+    <Compile Include="ViewModels\DetalleUnidadesVenta.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

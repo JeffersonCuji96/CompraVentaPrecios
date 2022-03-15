@@ -22,7 +22,7 @@ function CalcularCompraGasto() {
                     CargarTablaGasto(x);
                     CargarTBodyDetalleGasto(x);
                     if (x.Item4.length !== 0) {
-                        CargarTBodyGananciaVenta(x.Item4, false);
+                        CargarTBodyGananciaVenta(x.Item4);
                         HabilitacionPrecioPorcentaje(true);
                         $("#txtPorcGanancia").val(x.Item4[0].PorcentajeGanancia);
                     }
@@ -144,7 +144,7 @@ function HabilitacionPrecioPorcentaje(estado) {
     $("#btnCalcular").attr("disabled", estado);
     $("#btnGananciaVenta").attr("disabled", estado);
 }
-function CargarTBodyGananciaVenta(res,estado) {
+function CargarTBodyGananciaVenta(res, estado = false) {
     let sumaMontoPorcentaje = 0;
     let sumaTotalVenta = 0;
     let sumaUtilidadBruta = 0;
@@ -152,6 +152,7 @@ function CargarTBodyGananciaVenta(res,estado) {
     let sumaTotalVendido = 0;
     for (let i = 0; i < res.length; i++) {
         $('.row' + i).after(
+            '<td id="IdGanancia' + i + '" class="rowGanancia d-none">' + res[i].IdGanancia + '</td>' +
             '<td id="PorcentajeGanancia' + i + '" class="rowGanancia d-none">' + res[i].PorcentajeGanancia.toFixed(2).replace(".", ",") + '</td>' +
             '<td id="MontoPorcentaje' + i + '" class="rowGanancia align-middle text-right">' + res[i].MontoPorcentajeGanancia.toFixed(2).replace(".", ",") + '</td>' +
             '<td id="PrecioVenta' + i + '" class="rowGanancia align-middle text-right">' + res[i].PrecioVenta.toFixed(2).replace(".", ",") + '</td>' +
@@ -172,7 +173,16 @@ function CargarTBodyGananciaVenta(res,estado) {
         sumaUtilidadBruta += res[i].TotalUtilidadBruta;
         sumaUnidadesVendidas += res[i].UnidadesVendidas;
         sumaTotalVendido += res[i].TotalVendido;
-        HabilitacionCantidad(estado);
+
+        if (estado === false) {
+            if (res[i].Stock === 0) {
+                HabilitacionUnidadVenta(i, true);
+            } else {
+                HabilitacionUnidadVenta(i, false);
+            }
+        } else {
+            HabilitacionUnidadesVentas(estado);
+        }
     }
     CargarTFootGananciaVenta(sumaMontoPorcentaje, sumaTotalVenta, sumaUtilidadBruta, sumaUnidadesVendidas, sumaTotalVendido);
 }
@@ -184,8 +194,8 @@ function CargarTFootGananciaVenta(sumaMontoPorcentaje, sumaTotalVenta, sumaUtili
         '<td class="rowSum2 text-right font-weight-bold">' + sumaTotalVenta.toFixed(2).replace(".", ",") + '</td>' +
         '<td class="rowSum2"></td>' +
         '<td class="rowSum2 text-right font-weight-bold">' + sumaUtilidadBruta.toFixed(2).replace(".", ",") + '</td>' +
-        '<td class="rowSum2 text-center font-weight-bold">' + sumaUnidadesVendidas + '</td>' +
-        '<td class="rowSum2 text-right font-weight-bold">' + sumaTotalVendido.toFixed(2).replace(".", ",") + '</td>' +
+        '<td id="SumaUnidades" class="rowSum2 text-center font-weight-bold">' + sumaUnidadesVendidas + '</td>' +
+        '<td id="SumaTotalVendido" class="rowSum2 text-right font-weight-bold">' + sumaTotalVendido.toFixed(2).replace(".", ",") + '</td>' +
         '<td class="rowSum2"></td>'
     );
 }
@@ -213,24 +223,24 @@ function EntradaCantidad(evt) {
 
 function CalcularPrecioEstablecido(index) {
     var precioEstablecido = parseFloat($("#PrecioEstablecido" + index).val().replace(",", ".")).toFixed(2);
-    $("#PrecioEstablecido" + index).val(precioEstablecido.replace(".", ","));
     var precioVenta = parseFloat($("#PrecioVenta" + index).text().replace(",", ".")).toFixed(2);
+    $("#PrecioEstablecido" + index).val(precioEstablecido.replace(".", ","));
     if (precioEstablecido < precioVenta) {
-        swal("Venta", "El precio establecido no puede ser menor al precio de venta", "warning").then(() => {
-            $("#PrecioEstablecido" + index).val(precioVenta.replace(".", ","));
-            $("#PrecioEstablecido" + index).focus();
-        });
-    } else {
-        var stock = arrayDetalleCompra[index].Cantidad;
-        var costoUnitario = arrayDetalleCompra[index].CostoUnitario;
-        var totalVenta = precioEstablecido * stock;
-        var ganancia = precioEstablecido - costoUnitario;
-        var utilidadBruta = (precioEstablecido - costoUnitario) * stock;
-        $("#TotalVenta" + index).text(totalVenta.toFixed(2).replace(".", ","));
-        $("#Ganancia" + index).text(ganancia.toFixed(2).replace(".", ","));
-        $("#UtilidadBruta" + index).text(utilidadBruta.toFixed(2).replace(".", ","));
-        SumarMontosGananciaVenta();
+        var precioEstablecidoInvalido = precioEstablecido.replace(".", ",");
+        $("#PrecioEstablecido" + index).val(precioVenta.replace(".", ","));
+        $("#PrecioEstablecido" + index).focus();
+        precioEstablecido = precioVenta;
+        swal("Venta", "El precio de venta establecido: " + precioEstablecidoInvalido + ". No puede ser menor al precio de venta: " + precioVenta.replace(".", ","), "warning");
     }
+    var stock = arrayDetalleCompra[index].Cantidad;
+    var costoUnitario = arrayDetalleCompra[index].CostoUnitario;
+    var totalVenta = precioEstablecido * stock;
+    var ganancia = precioEstablecido - costoUnitario;
+    var utilidadBruta = (precioEstablecido - costoUnitario) * stock;
+    $("#TotalVenta" + index).text(totalVenta.toFixed(2).replace(".", ","));
+    $("#Ganancia" + index).text(ganancia.toFixed(2).replace(".", ","));
+    $("#UtilidadBruta" + index).text(utilidadBruta.toFixed(2).replace(".", ","));
+    SumarMontosGananciaVenta();
 }
 function SumarMontosGananciaVenta() {
     $(".rowSum2").remove();
@@ -286,12 +296,12 @@ function GuardarGananciaVenta() {
                     $("#btnGananciaVenta").attr("disabled", false);
                     swal("Error", list);
                 } else if (res.estado === 1) {
+                    $(".rowGanancia").remove();
+                    $(".rowSum2").remove();
+                    CargarTBodyGananciaVenta(res.lstGananciaVenta);
                     HabilitacionPrecioPorcentaje(true);
-                    HabilitacionCantidad(false);
                     swal("Transacción exitosa!", "Información guardada", "success");
                 } else if (res.estado === 3) {
-                    HabilitacionPrecioPorcentaje(true);
-                    HabilitacionCantidad(false);
                     swal("Transacción erronea!", "El detalle ya se encuentra ingresado", "warning");
                 } else {
                     $("#btnGananciaVenta").attr("disabled", false);
@@ -302,7 +312,69 @@ function GuardarGananciaVenta() {
     }
 }
 
-function HabilitacionCantidad(estado) {
+function HabilitacionUnidadesVentas(estado) {
     $(".txtCantidadVendida").attr("disabled", estado);
     $(".btnCantidadVendida").attr("disabled", estado);
+}
+
+function HabilitacionUnidadVenta(index, estado) {
+    $("#CantidadVendida" + index).attr("disabled", estado);
+    $("#btnVendido" + index).attr("disabled", estado);
+}
+
+function SumarTotalUnidadesVenta(index, item) {
+    let sumaTotalVendido = 0;
+    let sumaUnidadesVendidas = 0;
+    $("#TotalVendido" + index).text(item.TotalVendido.toFixed(2));
+    $("#Stock" + index).text(item.Stock);
+    $("#CantidadVendida" + index).val(item.UnidadesVendidas);
+    for (let i = 0; i < arrayDetalleCompra.length; i++) {
+        sumaUnidadesVendidas += parseInt($("#CantidadVendida" + i).val());
+        sumaTotalVendido += parseFloat($("#TotalVendido" + i).text().replace(",", "."));
+    }
+    $("#SumaUnidades").text(sumaUnidadesVendidas);
+    $("#SumaTotalVendido").text(sumaTotalVendido.toFixed(2).replace(".", ","));
+}
+
+function CalcularUnidadesVendidas(index) {
+    var idGanancia = parseFloat($("#IdGanancia" + index).text());
+    var cantidadVendida = parseInt($("#CantidadVendida" + index).val());
+    if (isNaN(cantidadVendida)) {
+        swal("Cantidad Vendida", "Ingrese una cantidad", "warning");
+    } else if (cantidadVendida === 0) {
+        swal("Cantidad Vendida", "La cantidad no puede ser cero", "warning");
+    } else {
+        var data = {
+            UnidadesVenta: {
+                IdGanancia: idGanancia,
+                Cantidad: cantidadVendida
+            }
+        };
+        jQuery.ajax({
+            url: urlHost + "/Costo/GuardarUnidadesVendidas",
+            type: "POST",
+            data: JSON.stringify(data),
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (res) {
+                if (res.Item1 === 0) {
+                    let list = '';
+                    for (var i = 0; i < res.errores.length; i++) {
+                        list += i + 1 + ". " + res.errores[i] + '\n';
+                    }
+                    swal("Error", list);
+                } else if (res.Item1 === 3) {
+                    swal("Unidades Vendidas", "La cantidad vendida no pueder ser cero ni mayor o menor al stock del producto", "warning").then(() => {
+                        $("#CantidadVendida" + index).focus();
+                    });
+                } else if (res.Item1 === 1) {
+                    HabilitacionUnidadVenta(index, res.Item2.Habilitacion);
+                    SumarTotalUnidadesVenta(index, res.Item2);
+                    swal("Transacción exitosa!", "Información guardada", "success");
+                } else {
+                    swal("Transacción erronea", "La operación no se realizó", "error");
+                }
+            }
+        });
+    }
 }

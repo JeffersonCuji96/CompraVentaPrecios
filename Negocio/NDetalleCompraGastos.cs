@@ -103,6 +103,7 @@ namespace Negocio
                     {
                         lstGananciaVenta = db.TGananciaVenta.Where(x => x.IdCompra == idCompra).Select(x => new DetalleGananciaVenta()
                         {
+                            IdGanancia = x.IdGanancia,
                             PorcentajeGanancia = x.PorcentajeGanancia,
                             MontoPorcentajeGanancia = x.MontoPorcentajeGanancia,
                             PrecioVenta = x.PrecioVenta,

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="BDVentaCompraModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+<Schema Namespace="DBCostosMercaderiaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="TCompra">
     <Key>
       <PropertyRef Name="IdCompra" />
@@ -54,16 +54,16 @@
       <PropertyRef Name="IdGasto" />
     </Key>
     <Property Name="IdGasto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Descripcion" Type="varchar" MaxLength="500" Nullable="false" />
   </EntityType>
   <EntityType Name="TProducto">
     <Key>
       <PropertyRef Name="IdProducto" />
     </Key>
     <Property Name="IdProducto" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Descripcion" Type="varchar" MaxLength="500" Nullable="false" />
   </EntityType>
-  <Association Name="FK_Compra_DetalleCompra">
+  <Association Name="FK_TDetalleCompra_TCompra">
     <End Role="TCompra" Type="Self.TCompra" Multiplicity="1" />
     <End Role="TDetalleCompra" Type="Self.TDetalleCompra" Multiplicity="*" />
     <ReferentialConstraint>
@@ -75,19 +75,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Gasto_DetalleGasto">
-    <End Role="TGasto" Type="Self.TGasto" Multiplicity="1" />
-    <End Role="TDetalleGasto" Type="Self.TDetalleGasto" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="TGasto">
-        <PropertyRef Name="IdGasto" />
-      </Principal>
-      <Dependent Role="TDetalleGasto">
-        <PropertyRef Name="IdGasto" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Producto_DetalleCompra">
+  <Association Name="FK_TDetalleCompra_TProducto">
     <End Role="TProducto" Type="Self.TProducto" Multiplicity="1" />
     <End Role="TDetalleCompra" Type="Self.TDetalleCompra" Multiplicity="*" />
     <ReferentialConstraint>
@@ -111,6 +99,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_TDetalleGasto_TGasto">
+    <End Role="TGasto" Type="Self.TGasto" Multiplicity="1" />
+    <End Role="TDetalleGasto" Type="Self.TDetalleGasto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TGasto">
+        <PropertyRef Name="IdGasto" />
+      </Principal>
+      <Dependent Role="TDetalleGasto">
+        <PropertyRef Name="IdGasto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_TGananciaVenta_TCompra">
     <End Role="TCompra" Type="Self.TCompra" Multiplicity="1" />
     <End Role="TGananciaVenta" Type="Self.TGananciaVenta" Multiplicity="*" />
@@ -123,27 +123,27 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="BDVentaCompraModelStoreContainer">
+  <EntityContainer Name="DBCostosMercaderiaModelStoreContainer">
     <EntitySet Name="TCompra" EntityType="Self.TCompra" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TDetalleCompra" EntityType="Self.TDetalleCompra" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TDetalleGasto" EntityType="Self.TDetalleGasto" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TGananciaVenta" EntityType="Self.TGananciaVenta" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TGasto" EntityType="Self.TGasto" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TProducto" EntityType="Self.TProducto" Schema="dbo" store:Type="Tables" />
-    <AssociationSet Name="FK_Compra_DetalleCompra" Association="Self.FK_Compra_DetalleCompra">
+    <AssociationSet Name="FK_TDetalleCompra_TCompra" Association="Self.FK_TDetalleCompra_TCompra">
       <End Role="TCompra" EntitySet="TCompra" />
       <End Role="TDetalleCompra" EntitySet="TDetalleCompra" />
     </AssociationSet>
-    <AssociationSet Name="FK_Gasto_DetalleGasto" Association="Self.FK_Gasto_DetalleGasto">
-      <End Role="TGasto" EntitySet="TGasto" />
-      <End Role="TDetalleGasto" EntitySet="TDetalleGasto" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Producto_DetalleCompra" Association="Self.FK_Producto_DetalleCompra">
+    <AssociationSet Name="FK_TDetalleCompra_TProducto" Association="Self.FK_TDetalleCompra_TProducto">
       <End Role="TProducto" EntitySet="TProducto" />
       <End Role="TDetalleCompra" EntitySet="TDetalleCompra" />
     </AssociationSet>
     <AssociationSet Name="FK_TDetalleGasto_TCompra" Association="Self.FK_TDetalleGasto_TCompra">
       <End Role="TCompra" EntitySet="TCompra" />
+      <End Role="TDetalleGasto" EntitySet="TDetalleGasto" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TDetalleGasto_TGasto" Association="Self.FK_TDetalleGasto_TGasto">
+      <End Role="TGasto" EntitySet="TGasto" />
       <End Role="TDetalleGasto" EntitySet="TDetalleGasto" />
     </AssociationSet>
     <AssociationSet Name="FK_TGananciaVenta_TCompra" Association="Self.FK_TGananciaVenta_TCompra">

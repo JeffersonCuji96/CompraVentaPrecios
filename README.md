@@ -1,4 +1,4 @@
-# Cálculo de compra, venta, ganancia y gastos de mercadería
+# Liquidación de costos
 El sistema calcula los valores de compra, venta, ganancia y gastos de mercadería. Se realiza el ingreso de los productos que se van a vender y los gastos que conllevan para efectuar esa compra. En una fecha específica, se procesa el detalle de la compra, para posteriormente obtener el total de la factura, el porcentaje y el costo de los productos por unidad y cantidad. Para obtener los precios de venta, ganancias y utilidad bruta, se debe ingresar un porcentaje de ganancia. Se maneja también, las unidades vendidas para obtener el total de las ventas, actualizando el stock correspondiente. El proyecto está realizado en ASP.NET MVC y se usa como motor de base de datos SqlServer. 
 
 ## Demostración

@@ -4,7 +4,7 @@ El sistema calcula los valores de compra, venta, ganancia y gastos de mercaderí
 ## Demostración
 Para ver un tutorial del proyecto visitar en youtube: https://youtu.be/0nJQc-GyjbQ
 
-Para revisar la demo del proyecto debe ingresar al sitio web: https://liquidaciondecostos.azurewebsites.net/
+Para revisar la demo del proyecto debe ingresar al sitio web: https://liquidacioncostos.azurewebsites.net/
     
 ## Vista previa
 
